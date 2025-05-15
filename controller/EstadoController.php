@@ -1,12 +1,12 @@
 <?php
- include_once '../model/Dependencia.php';
+ include_once '../model/Estado.php';
  $estado = new Estado();
 
  //-------------------------------------------------------------------
  // Funcion para crear 
  //-------------------------------------------------------------------
  if ($_POST['funcion']=='crear'){
-     $estado->Crear($_POST['nombre']);
+     $estado->Crear($_POST['id'], $_POST['nombre']);
  }
 
 //-------------------------------------------------------------------
@@ -26,20 +26,21 @@ if ($_POST['funcion']=='eliminar'){
 //-------------------------------------------------------------------
 // Funcion para buscar todos los registros  
 //-------------------------------------------------------------------
-if ($_POST['funcion']=='buscar_todos'){
-    //Variable que almacena la consulta en formato JSON
-    $json=array();
-    //LLamado al modelo
+if ($_POST['funcion'] == 'buscar_todos') {
+    $json = array();
     $estado->BuscarTodos($_POST['dato']);
     foreach ($estado->objetos as $objeto) {
-        $json[]=array(
-                        'id'=>$objeto->id_est,
-                        'nombre'=>$objeto->nom_est
+        $json[] = array(
+            'id' => $objeto->id_est,
+            'nombre' => $objeto->nom_est
         );
     }
-    $jsonstring = json_encode($json);
+
+    $jsonstring = json_encode(['data' => $json], JSON_UNESCAPED_UNICODE);
+    header('Content-Type: application/json');
     echo $jsonstring;
 }
+
 
 //-------------------------------------------------------------------
 // Funcion para buscar todos los registros DATATABLES
