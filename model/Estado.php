@@ -14,7 +14,7 @@ class Estado {
     //Funcion Crear               //
     //----------------------------//
     public function Crear ($id,$nombre){
-        $sql = "INSERT INTO dependencia (id_est,nom_est) VALUE (:id,nombre)";
+        $sql = "INSERT INTO estado (id_est,nom_est) VALUE (:id,:nombre)";
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id'=>$id,':nombre'=>$nombre));   
         echo 'add';
@@ -68,7 +68,7 @@ class Estado {
     //Busca un usuario segun el ID
     //--------------------------------
     function Buscar($id){
-        $sql = 'SELECT * FROM estadp WHERE id_est = :id';
+        $sql = 'SELECT * FROM estado WHERE id_est = :id';
         $query = $this->acceso->prepare($sql);
         $query->execute(array(':id'=>$id));
         $this->objetos=$query->fetchall();
